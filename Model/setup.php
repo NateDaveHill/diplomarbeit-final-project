@@ -78,10 +78,24 @@ $pdo->exec("CREATE TABLE IF NOT EXISTS `users` (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB
 ");
-echo "✓ User Table created\n";
+echo "✓ User table created\n";
+
+// Products table
+$pdo->exec("
+CREATE TABLE IF NOT EXISTS products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    description TEXT,
+    price DECIMAL(10, 2) NOT NULL,
+    stock INT DEFAULT 0,
+    image VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB
+");
+echo "  ✓ Products table created\n";
 
 // Orders table
-CREATE TABLE IF NOT EXISTS orders (
+$pdo->exec("CREATE TABLE IF NOT EXISTS orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     total_amount DECIMAL(10,2) NOT NULL,
@@ -92,8 +106,7 @@ CREATE TABLE IF NOT EXISTS orders (
     FOREING KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB
 ");
-echo "✓ Orders Table created\n";
-    
+echo "✓ Orders table created\n";
     
 // Order items table
 $pdo->exec("
@@ -107,5 +120,53 @@ CREATE TABLE IF NOT EXISTS order_items (
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 ) ENGINE=InnoDB
 ");
-echo "✓ Order Items Table created\n";
-    
+echo " ✓ Order_items Table created\n ";
+
+// Step 4: Insert default data
+echo "[4/4] Inserting default data...\n";
+
+// Check if admin already exists
+$stmt = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'admin'");
+$adminExists = $stmt->fetchColumn();
+
+if (!adminExists) {
+    $pdo->exec("
+    INSERT INTO users (username, email, password_hash, role)
+    VALUES ('admin', 'admin@webshop.local', '\$2y\$12\$RdRTqhPJwloP38lADLDxyeW3hWvf3PVzEy0WnDqpEu9LmjgX3A7ge', 'admin')");
+    echo " Admin user created";
+    echo "Username: admin\n";
+    echo "Password: Pass1234word\n";
+} else {
+    echo " Admin user already exists, skipping creation.\n";
+}
+
+// Check if products already exist
+$stmt = $pdo->query("SELECT COUNT(*) FROM products");
+$productExists = $stmt->fetchColumn();
+
+if ($productCount == 0) {
+    $pdo->exec("
+    INSERT INTO products (name, description, price, stock, image)
+    VALUES 
+    ('Laptop Pro 15\"', 'High-performance laptop with 16GB RAM and 512GB SSD', 1299.99, 50, 'laptop_pro_15.png'),
+    ('Wireless Mouse', 'Ergonomic wireless mouse with adjustable DPI', 29.99, 200, 'wireless_mouse.png'),
+    ('Mechanical Keyboard', 'RGB backlit mechanical keyboard with blue switches', 89.99, 150, 'mechanical_keyboard.png'),
+    ('27\" 4K Monitor', 'Ultra HD monitor with stunning color accuracy', 399.99, 75, '4k_monitor_27.png')
+    ");
+    echo " ✓ Sample products inserted\n";
+} else {
+    echo " ✓ Products already exist, skipping sample data insertion.\n";
+}
+
+echo "\n=================================\n";
+echo "✓ Setup Complete!\n";
+echo "=================================\n\n";
+
+echo "Next steps:\n";
+echo "1. Start your development server:\n";
+echo "   cd View && php -S localhost:8000\n\n";
+echo "2. Visit: http://localhost:8000\n\n";
+echo "3. Login with:\n";
+echo "   Username: admin\n";
+echo "   Password: Pass1234word\n\n";
+echo "4. ⚠️  IMPORTANT: Go to Profile and change your password!\n\n";
