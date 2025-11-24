@@ -57,3 +57,42 @@ if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
 
 session_name($_ENV['SESSION_NAME'] ?? 'webshop_session');
 session_start();
+
+// config functions
+
+function isLoggedIn()
+{
+    return isset($_SESSION['user_id']);
+}
+
+function isAdmin()
+{
+    return isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
+}
+
+function isPremium()
+{
+    return isset($_SESSION['role']) && $_SESSION['role'] === 'premium';
+}
+
+function sanitizeInput($data)
+{
+    return htmlspecialchars(strip_tags(trim($data)), ENT_QUOTES, 'UTF-8');
+}
+
+function logError($message, $context = [])
+{
+    if (APP_DEBUG) {
+        $logMessage = date('Y-m-d H:i:s') . " - " . $message;
+        if (!empty($context)) {
+            $logMessage .= ' | Context: ' . json_encode($context);
+        }
+        error_log($logMessage . PHP_EOL, 3, __DIR__ . '/../logs/error.log');
+    }
+}
+
+function redirect($url)
+{
+    header("Location: $url");
+    exit;
+}
