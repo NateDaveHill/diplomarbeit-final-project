@@ -33,7 +33,8 @@ if (is_dir($file)) {
 }
 
 if (file_exists($file)) {
-    return false; // Let PHP's built-in server handle it
+    require $file; // Execute the file right here
+    return true; // Indicate that the request has been handled
 }
 
 // 404

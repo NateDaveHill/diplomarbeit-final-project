@@ -51,5 +51,81 @@ $products = $stmt->fetchAll();
 </form>
 <?php endif; ?>
 
+<main>
+    <div class="page-header">
+        <div class="container">
+            <h1>Unsere Produkte</h1>
+            <form method="GET" style="margin-top: 1rem;">
+                <div style="display: flex; gap: 0.5rem; max-width: 500px;">
+                    <input type="text" name="search" class="form-control" placeholder="Produkte suchen..." value="<?= htmlspecialchars($search) ?>">
+                    <button type="submit" class="btn btn-primary">Suchen</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="container">
+        <?php if (isset($_SESSION['success'])): ?>
+            <div class="alert alert-success">
+                ✓ <?= $_SESSION['success'] ?>
+            </div>
+            <?php unset($_SESSION['success']); ?>
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION['error'])): ?>
+            <div class="alert alert-error">
+                ✗ <?= $_SESSION['error'] ?>
+            </div>
+            <?php unset($_SESSION['error']); ?>
+        <?php endif; ?>
+
+        <?php if (empty($products)): ?>
+            <div class="text-center" style="padding: 3rem;">
+                <h2>Keine Produkte gefunden</h2>
+                <?php if ($search): ?>
+                    <a href="index.php" class="btn btn-primary mt-2">Alle Produkte anzeigen</a>
+                <?php endif; ?>
+            </div>
+        <?php else: ?>
+            <div class="products-grid">
+                <?php foreach ($products as $product): ?>
+                    <div class="product-card">
+                        <div class="product-image">📦</div>
+                        <div class="product-info">
+                            <h3 class="product-name"><?= htmlspecialchars($product['name']) ?></h3>
+                            <p class="product-description"><?= htmlspecialchars($product['description']) ?></p>
+                            <div class="product-price">€<?= number_format($product['price'], 2, ',', '.') ?></div>
+                            <div class="product-stock">
+                                <?php if ($product['stock'] > 0): ?>
+                                    ✓ Auf Lager (<?= $product['stock'] ?>)
+                                <?php else: ?>
+                                    <span class="text-danger">✗ Nicht verfügbar</span>
+                                <?php endif; ?>
+                            </div>
+                            <div class="product-actions">
+                                <a href="product.php?id=<?= $product['id'] ?>" class="btn btn-secondary btn-small">Details</a>
+                                <?php if ($product['stock'] > 0): ?>
+                                    <form method="POST" action="../Controller/cart_handler.php" style="flex: 1;">
+                                        <input type="hidden" name="csrf_token" value="<?= generateCsrfToken() ?>">
+                                        <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+                                        <input type="hidden" name="quantity" value="1">
+                                        <button type="submit" name="add_to_cart" class="btn btn-primary btn-small btn-block">In Warenkorb</button>
+                                    </form>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+    </div>
+</main>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2025 Webshop. Alle Rechte vorbehalten.</p>
+    </div>
+</footer>
+
 </body>
 </html>
