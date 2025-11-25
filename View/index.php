@@ -23,6 +23,8 @@ $products = $stmt->fetchAll();
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Webshop - Home</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="main.js" defer></script>
 </head>
 <body>
 <header>
@@ -30,8 +32,8 @@ $products = $stmt->fetchAll();
         <a href="index.php" class="logo">Nate's Online Shop</a>
         <ul class="nav-links">
             <li><a href="index.php">Produkte</a></li>
-            <li><a href="cart.php">Warenkorb <?php if (getCartCount() > 0): ?><span class="cart-badge"><?= getCartCount() ?></span><?php endif; ?></a></li>
-            <?php if (isLoggedIn()): ?>
+<!--            <li><a href="cart.php">Warenkorb <?php /*if (getCartCount() > 0): */?><span class="cart-badge"><?php /*= getCartCount() */?></span><?php /*endif; */?></a></li>
+-->            <?php if (isLoggedIn()): ?>
             <li><a href="profile.php">Profil</a></li>
             <?php if (isAdmin()): ?>
                 <li><a href="admin.php">Admin</a></li>
@@ -58,7 +60,7 @@ $products = $stmt->fetchAll();
             <form method="GET" style="margin-top: 1rem;">
                 <div style="display: flex; gap: 0.5rem; max-width: 500px;">
                     <input type="text" name="search" class="form-control" placeholder="Produkte suchen..." value="<?= htmlspecialchars($search) ?>">
-                    <button type="submit" class="btn btn-primary">Suchen</button>
+                   <button type="submit" class="btn btn-primary">Suchen</button>
                 </div>
             </form>
         </div>

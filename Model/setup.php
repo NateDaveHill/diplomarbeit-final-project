@@ -6,7 +6,7 @@ function loadEnv($path) {
         return false;
     }
 
-    $lines + file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     foreach ($lines as $line) {
         if (strpos(trim($line), '#') === 0) {
             continue;
@@ -17,10 +17,10 @@ function loadEnv($path) {
         }
 
         list($key, $value) = explode('=', $line, 2);
-        $name = trim($name);
+        $name = trim($key);
         $value = trim($value);
 
-        if (!array_key_exists($name, $value)) {
+        if (!array_key_exists($name, $_ENV)) {
             $_ENV[$name] = $value;
         }
     }
@@ -65,7 +65,7 @@ try {
 
 // Step 3: Connect to the newly created database
 echo "[3/4] Creating tables...\n";
-$pdo->exec("USER `$db_name`");
+$pdo->exec("USE `$db_name`");
 
 // User table
 $pdo->exec("CREATE TABLE IF NOT EXISTS `users` (
@@ -103,7 +103,7 @@ $pdo->exec("CREATE TABLE IF NOT EXISTS orders (
     final_amount DECIMAL(10,2) NOT NULL,
     status ENUM('pending', 'processing', 'shipped', 'delivered', 'cancelled') DEFAULT 'pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREING KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB
 ");
 echo "✓ Orders table created\n";
@@ -129,7 +129,7 @@ echo "[4/4] Inserting default data...\n";
 $stmt = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'admin'");
 $adminExists = $stmt->fetchColumn();
 
-if (!adminExists) {
+if ($adminExists) {
     $pdo->exec("
     INSERT INTO users (username, email, password_hash, role)
     VALUES ('admin', 'admin@webshop.local', '\$2y\$12\$RdRTqhPJwloP38lADLDxyeW3hWvf3PVzEy0WnDqpEu9LmjgX3A7ge', 'admin')");
@@ -144,7 +144,7 @@ if (!adminExists) {
 $stmt = $pdo->query("SELECT COUNT(*) FROM products");
 $productExists = $stmt->fetchColumn();
 
-if ($productCount == 0) {
+if ($productExists == 0) {
     $pdo->exec("
     INSERT INTO products (name, description, price, stock, image)
     VALUES 

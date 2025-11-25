@@ -33,8 +33,13 @@ if (is_dir($file)) {
 }
 
 if (file_exists($file)) {
-    require $file; // Execute the file right here
-    return true; // Indicate that the request has been handled
+    // Check if it's a PHP file
+    if (pathinfo($file, PATHINFO_EXTENSION) === 'php') {
+        require $file; // Execute PHP files
+        return true;
+    }
+    // For static files (CSS, JS, images, etc.), let PHP's built-in server handle them
+    return false;
 }
 
 // 404
