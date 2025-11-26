@@ -13,6 +13,7 @@ if ($search) {
 }
 
 $products = $stmt->fetchAll();
+
 ?>
 
 <!doctype html>
@@ -32,7 +33,8 @@ $products = $stmt->fetchAll();
         <a href="index.php" class="logo">Nate's Online Shop</a>
         <ul class="nav-links">
             <li><a href="index.php">Produkte</a></li>
-<!--            <li><a href="cart.php">Warenkorb <?php /*if (getCartCount() > 0): */?><span class="cart-badge"><?php /*= getCartCount() */?></span><?php /*endif; */?></a></li>
+<!--
+            <li><a href="cart.php">Warenkorb <?php /*if (getCartCount() > 0): */?><span class="cart-badge"><?php /*= getCartCount() */?></span><?php /*endif; */?></a></li>
 -->            <?php if (isLoggedIn()): ?>
             <li><a href="profile.php">Profil</a></li>
             <?php if (isAdmin()): ?>
@@ -108,7 +110,6 @@ $products = $stmt->fetchAll();
                                 <a href="product.php?id=<?= $product['id'] ?>" class="btn btn-secondary btn-small">Details</a>
                                 <?php if ($product['stock'] > 0): ?>
                                     <form method="POST" action="../Controller/cart_handler.php" style="flex: 1;">
-                                        <input type="hidden" name="csrf_token" value="<?= generateCsrfToken() ?>">
                                         <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
                                         <input type="hidden" name="quantity" value="1">
                                         <button type="submit" name="add_to_cart" class="btn btn-primary btn-small btn-block">In Warenkorb</button>
