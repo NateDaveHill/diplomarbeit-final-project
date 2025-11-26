@@ -39,7 +39,7 @@
 
   # https://devenv.sh/processes/
   processes = {
-    webserver.exec = "php -S localhost:8000 -t . Controller/router.php";
+    webserver.exec = "php -S localhost:8000 -t View";
   };
 
     services.mysql = {
