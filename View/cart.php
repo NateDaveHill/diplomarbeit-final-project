@@ -24,7 +24,6 @@ $final_total = $cart_total - $discount;
     <script src="main.js" defer></script>
 </head>
 <body>
-<header>
     <header>
         <nav class="container">
             <a href="index.php" class="logo">🛒 Webshop</a>
