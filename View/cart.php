@@ -82,7 +82,6 @@ $final_total = $cart_total - $discount;
                 <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
                     <div>
                         <form method="POST" action="../Controller/cart_handler.php">
-                            <input type="hidden" name="csrf_token" value="<?= generateCsrfToken() ?>">
                             <?php foreach ($_SESSION['cart'] as $item): ?>
                                 <div class="cart-item">
                                     <div class="cart-item-image">📦</div>
@@ -138,7 +137,6 @@ $final_total = $cart_total - $discount;
 
                             <?php if (isLoggedIn()): ?>
                                 <form method="POST" action="../Controller/cart_handler.php">
-                                    <input type="hidden" name="csrf_token" value="<?= generateCsrfToken() ?>">
                                     <button type="submit" name="checkout" class="btn btn-success btn-block mt-3">Jetzt bestellen</button>
                                 </form>
                             <?php else: ?>
@@ -194,7 +192,6 @@ $final_total = $cart_total - $discount;
                 <span class="modal-close" onclick="closeRegisterModal()">&times;</span>
             </div>
             <form method="POST" action="../Controller/auth.php">
-                <input type="hidden" name="csrf_token" value="<?= generateCsrfToken() ?>">
                 <div class="form-group">
                     <label>Benutzername</label>
                     <input type="text" name="username" class="form-control" required minlength="3">
