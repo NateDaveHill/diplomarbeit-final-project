@@ -129,15 +129,15 @@ echo "[4/4] Inserting default data...\n";
 $stmt = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'admin'");
 $adminExists = $stmt->fetchColumn();
 
-if ($adminExists) {
+if (!$adminExists) {
     $pdo->exec("
     INSERT INTO users (username, email, password_hash, role)
     VALUES ('admin', 'admin@webshop.local', '\$2y\$12\$RdRTqhPJwloP38lADLDxyeW3hWvf3PVzEy0WnDqpEu9LmjgX3A7ge', 'admin')");
-    echo " Admin user created";
-    echo "Username: admin\n";
-    echo "Password: Pass1234word\n";
+    echo " ✓ Admin user created\n";
+    echo "   Username: admin\n";
+    echo "   Password: Pass1234word\n";
 } else {
-    echo " Admin user already exists, skipping creation.\n";
+    echo " ✓ Admin user already exists, skipping creation.\n";
 }
 
 // Check if products already exist
