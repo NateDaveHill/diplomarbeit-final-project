@@ -129,5 +129,58 @@ $products = $stmt->fetchAll();
     </div>
 </footer>
 
+<!-- Login Modal -->
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Anmelden</h2>
+            <span class="modal-close" onclick="closeLoginModal()">&times;</span>
+        </div>
+        <form method="POST" action="../Controller/auth.php">
+            <div class="form-group">
+                <label>Benutzername oder E-Mail</label>
+                <input type="text" name="username" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Passwort</label>
+                <input type="password" name="password" class="form-control" required>
+            </div>
+            <button type="submit" name="login" class="btn btn-primary btn-block">Anmelden</button>
+            <p class="text-center mt-2">
+                <a href="#" onclick="closeLoginModal(); showRegisterModal();">Noch kein Konto? Registrieren</a>
+            </p>
+        </form>
+    </div>
+</div>
+
+<!-- Register Modal -->
+<div id="registerModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Registrieren</h2>
+            <span class="modal-close" onclick="closeRegisterModal()">&times;</span>
+        </div>
+        <form method="POST" action="../Controller/auth.php">
+            <div class="form-group">
+                <label>Benutzername</label>
+                <input type="text" name="username" class="form-control" required minlength="3">
+            </div>
+            <div class="form-group">
+                <label>E-Mail</label>
+                <input type="email" name="email" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Passwort</label>
+                <input type="password" name="password" class="form-control" required minlength="8">
+            </div>
+            <div class="form-group">
+                <label>Passwort bestätigen</label>
+                <input type="password" name="password_confirm" class="form-control" required>
+            </div>
+            <button type="submit" name="register" class="btn btn-primary btn-block">Registrieren</button>
+        </form>
+    </div>
+</div>
+
 </body>
 </html>
