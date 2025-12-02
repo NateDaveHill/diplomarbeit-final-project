@@ -81,7 +81,7 @@ $final_total = $cart_total - $discount;
             <?php else: ?>
                 <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
                     <div>
-                        <form method="POST" action="../Controller/cart_handler.php">
+                        <form method="POST" action="cart.php">
                             <?php foreach ($_SESSION['cart'] as $item): ?>
                                 <div class="cart-item">
                                     <div class="cart-item-image">📦</div>
@@ -97,7 +97,7 @@ $final_total = $cart_total - $discount;
                                         <div style="font-size: 1.25rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">
                                             €<?= number_format($item['price'] * $item['quantity'], 2, ',', '.') ?>
                                         </div>
-                                        <a href="../Controller/cart_handler.php?remove_from_cart=<?= $item['id'] ?>" class="btn btn-danger btn-small" onclick="return confirm('Wirklich entfernen?')">Entfernen</a>
+                                        <a href="cart.php?remove_from_cart=<?= $item['id'] ?>" class="btn btn-danger btn-small" onclick="return confirm('Wirklich entfernen?')">Entfernen</a>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
@@ -136,7 +136,7 @@ $final_total = $cart_total - $discount;
                             <?php endif; ?>
 
                             <?php if (isLoggedIn()): ?>
-                                <form method="POST" action="../Controller/cart_handler.php">
+                                <form method="POST" action="cart.php">
                                     <button type="submit" name="checkout" class="btn btn-success btn-block mt-3">Jetzt bestellen</button>
                                 </form>
                             <?php else: ?>
