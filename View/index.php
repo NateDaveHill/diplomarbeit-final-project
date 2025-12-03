@@ -34,7 +34,7 @@ $products = $stmt->fetchAll();
         <a href="index.php" class="logo">Nate's Online Shop</a>
         <ul class="nav-links">
             <li><a href="index.php">Produkte</a></li>
-            <li><a href="cart.php">Warenkorb <?php if (getCartCount() > 0): ?><span class="cart-badge"><?php getCartCount() ?></span><?php endif; ?></a></li>
+            <li><a href="cart.php">Warenkorb <?php if (getCartCount() > 0): ?><span class="cart-badge"><?= getCartCount() ?></span><?php endif; ?></a></li>
             <?php if (isLoggedIn()): ?>
             <li><a href="profile.php">Profil</a></li>
             <?php if (isAdmin()): ?>
