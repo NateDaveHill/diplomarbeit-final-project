@@ -40,6 +40,12 @@ $orders = $stmt->fetchAll();
     </nav>
 </header>
 
+<?php if (isLoggedIn()): ?>
+    <form method="POST" action="index.php" id="logoutForm" style="display: none;">
+        <input type="hidden" name="logout" value="1">
+    </form>
+<?php endif; ?>
+
 <main>
     <div class="page-header">
         <div class="container">
