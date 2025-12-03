@@ -30,11 +30,11 @@ $orders = $stmt->fetchAll();
         <a href="index.php" class="logo">Webshop</a>
         <ul class="nav-links">
             <li><a href="index.php">Produkte</a></li>
+            <li><a href="cart.php">Warenkorb <?php if (getCartCount() > 0): ?><span class="cart-badge"><?= getCartCount() ?></span><?php endif; ?></a><hat/li>
             <li><a href="profile.php">Profil</a></li>
             <?php if (isAdmin()): ?>
                 <li><a href="admin.php">Admin</a></li>
             <?php endif; ?>
-            <li><a href="cart.php">Warenkorb <?php if (getCartCount() > 0): ?><span class="cart-badge"><?= getCartCount() ?></span><?php endif; ?></a><hat/li>
             <li><a href="#" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">Abmelden</a></li>
         </ul>
     </nav>
