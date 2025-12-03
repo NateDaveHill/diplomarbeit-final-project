@@ -50,7 +50,7 @@ $products = $stmt->fetchAll();
 </header>
 
 <?php if (isLoggedIn()): ?>
-<form action="index.php" id="logoutForm" style="display: none;">
+<form method="POST" action="index.php" id="logoutForm" style="display: none;">
     <input type="hidden" name="logout" value="1">
 </form>
 <?php endif; ?>
