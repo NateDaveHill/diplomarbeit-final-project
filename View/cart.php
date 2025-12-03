@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../Controller/config.php';
+require_once __DIR__ . '/../Controller/auth.php';
 require_once __DIR__ . '/../Controller/cart_handler.php';
 
 $cart_total = getCartTotal();
@@ -45,7 +46,7 @@ $final_total = $cart_total - $discount;
     </header>
 
     <?php if (isLoggedIn()): ?>
-        <form method="POST" action="../Controller/auth.php" id="logoutForm" style="display: none;">
+        <form method="POST" action="index.php" id="logoutForm" style="display: none;">
             <input type="hidden" name="logout" value="1">
         </form>
     <?php endif; ?>
@@ -167,7 +168,7 @@ $final_total = $cart_total - $discount;
                 <h2>Anmelden</h2>
                 <span class="modal-close" onclick="closeLoginModal()">&times;</span>
             </div>
-            <form method="POST" action="../Controller/auth.php">
+            <form method="POST" action="cart.php">
                 <div class="form-group">
                     <label>Benutzername oder E-Mail</label>
                     <input type="text" name="username" class="form-control" required>
@@ -191,7 +192,7 @@ $final_total = $cart_total - $discount;
                 <h2>Registrieren</h2>
                 <span class="modal-close" onclick="closeRegisterModal()">&times;</span>
             </div>
-            <form method="POST" action="../Controller/auth.php">
+            <form method="POST" action="cart.php">
                 <div class="form-group">
                     <label>Benutzername</label>
                     <input type="text" name="username" class="form-control" required minlength="3">
