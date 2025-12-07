@@ -27,10 +27,19 @@ $envPath = dirname(__DIR__) . '/.env';
 loadEnv($envPath);
 
 // Database configuration
-define('DB_HOST', $_ENV['DB_HOST'] ?? 'localhost');
-define('DB_NAME', $_ENV['DB_NAME'] ?? 'webshop_edv');
-define('DB_USER', $_ENV['DB_USER'] ?? 'root');
-define('DB_PASS', $_ENV['DB_PASS'] ?? '');
+// Railway provides DATABASE_URL, parse it if available
+if (isset($_ENV['DATABASE_URL'])) {
+    $db = parse_url($_ENV['DATABASE_URL']);
+    define('DB_HOST', $db['host'] ?? 'localhost');
+    define('DB_NAME', ltrim($db['path'] ?? '/webshop_edv', '/'));
+    define('DB_USER', $db['user'] ?? 'root');
+    define('DB_PASS', $db['pass'] ?? '');
+} else {
+    define('DB_HOST', $_ENV['DB_HOST'] ?? 'localhost');
+    define('DB_NAME', $_ENV['DB_NAME'] ?? 'webshop_edv');
+    define('DB_USER', $_ENV['DB_USER'] ?? 'root');
+    define('DB_PASS', $_ENV['DB_PASS'] ?? '');
+}
 
 
 //Application configuration
