@@ -11,6 +11,7 @@
   packages = [
     pkgs.git
     pkgs.curl
+    pkgs.mysql80
   ];
 
   # https://devenv.sh/languages/
@@ -39,7 +40,16 @@
 
   # https://devenv.sh/processes/
   processes = {
-    webserver.exec = "php -S localhost:8000 -t View";
+    webserver.exec = ''
+      echo "Waiting for MySQL to be ready..."
+      while ! mysql -h127.0.0.1 -uwebshop -pwebshop -e "SELECT 1" >/dev/null 2>&1; do
+        sleep 1
+      done
+      echo "MySQL is ready! Running setup..."
+      php Model/setup.php || echo "Setup failed or already completed"
+      echo "Starting webserver..."
+      php -S localhost:8000 -t View
+    '';
   };
 
     services.mysql = {

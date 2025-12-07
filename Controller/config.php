@@ -22,6 +22,10 @@ function loadEnv($path) {
     return true;
 }
 
+// Load environment variables from .env file
+$envPath = dirname(__DIR__) . '/.env';
+loadEnv($envPath);
+
 // Database configuration
 define('DB_HOST', $_ENV['DB_HOST'] ?? 'localhost');
 define('DB_NAME', $_ENV['DB_NAME'] ?? 'webshop_edv');
