@@ -2,11 +2,9 @@
 
 Mein Online Store wird auch auf Railway mit einer CI/CD Deployment Pipeline für testing zwecken LIVE gehosted um direkt den Webshop auch anzusehen und zu testen.
 
-**Live Demo:** [Webshop auf Railway ansehen](https://your-app.up.railway.app) _(URL nach Deployment aktualisieren)_
+**Live Demo:** [Webshop auf Railway ansehen](https://diplomarbeit-final-project-production.up.railway.app/)
 
-📦 **Willst du selbst deployen?** Siehe [RAILWAY_DEPLOYMENT.md](./RAILWAY_DEPLOYMENT.md) für eine vollständige Anleitung! 
-
-## Voraussetzungen
+## Voraussetzungen wenn du es aber bei die Lokal hosten willst
 
 ### Unterstützte Betriebssysteme
 
