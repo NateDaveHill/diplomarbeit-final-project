@@ -24,15 +24,22 @@ $users = $pdo->query("SELECT * FROM users ORDER BY created_at DESC")->fetchAll()
         <a href="index.php" class="logo">🛒 Webshop</a>
         <ul class="nav-links">
             <li><a href="index.php">Produkte</a></li>
-            <li><a href="profile.php">Profil</a></li>
-            <li><a href="admin.php">Admin</a></li>
             <li><a href="cart.php">Warenkorb <?php if (getCartCount() > 0): ?><span class="cart-badge"><?= getCartCount() ?></span><?php endif; ?></a></li>
-            <li><a href="#" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">Abmelden</a></li>
+            <?php if (isLoggedIn()): ?>
+                <li><a href="profile.php">Profil</a></li>
+                <?php if (isAdmin()): ?>
+                    <li><a href="admin.php">Admin</a></li>
+                <?php endif; ?>
+                <li><a href="#" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">Abmelden</a></li>
+            <?php else: ?>
+                <li><a href="#" onclick="showLoginModal()">Anmelden</a></li>
+                <li><a href="#" onclick="showRegisterModal()">Registrieren</a></li>
+            <?php endif; ?>
         </ul>
     </nav>
 </header>
 
-<form method="POST" action="../Controller/auth.php" id="logoutForm" style="display: none;">
+<form method="POST" action="index.php" id="logoutForm" style="display: none;">
     <input type="hidden" name="logout" value="1">
 </form>
 
@@ -213,7 +220,7 @@ $users = $pdo->query("SELECT * FROM users ORDER BY created_at DESC")->fetchAll()
             <h2 id="productModalTitle">Produkt hinzufügen</h2>
             <span class="modal-close" onclick="closeProductModal()">&times;</span>
         </div>
-        <form method="POST" action="../Controller/admin_handler.php" id="productForm">
+        <form method="POST" action="admin.php" id="productForm">
             <input type="hidden" name="id" id="product-id">
             <div class="form-group">
                 <label>Produktname</label>
@@ -246,7 +253,7 @@ $users = $pdo->query("SELECT * FROM users ORDER BY created_at DESC")->fetchAll()
             <h2>Bestellstatus ändern</h2>
             <span class="modal-close" onclick="closeStatusModal()">&times;</span>
         </div>
-        <form method="POST" action="../Controller/admin_handler.php">
+        <form method="POST" action="admin.php">
             <input type="hidden" name="order_id" id="status-order-id">
             <div class="form-group">
                 <label>Neuer Status</label>
@@ -269,7 +276,7 @@ $users = $pdo->query("SELECT * FROM users ORDER BY created_at DESC")->fetchAll()
             <h2>Benutzerrolle ändern</h2>
             <span class="modal-close" onclick="closeRoleModal()">&times;</span>
         </div>
-        <form method="POST" action="../Controller/admin_handler.php">
+        <form method="POST" action="admin.php">
             <input type="hidden" name="user_id" id="role-user-id">
             <p>Benutzer: <strong id="role-username"></strong></p>
             <div class="form-group">
@@ -297,7 +304,7 @@ $users = $pdo->query("SELECT * FROM users ORDER BY created_at DESC")->fetchAll()
     </div>
 </div>
 
-<form method="POST" action="../Controller/admin_handler.php" id="deleteForm" style="display: none;">
+<form method="POST" action="admin.php" id="deleteForm" style="display: none;">
     <input type="hidden" name="delete_product" id="delete-product-id">
 </form>
 </body>
