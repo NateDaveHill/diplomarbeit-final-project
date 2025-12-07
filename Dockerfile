@@ -43,7 +43,7 @@ RUN chown -R www-data:www-data /var/www/html \
 RUN mkdir -p /var/www/html/logs && chown -R www-data:www-data /var/www/html/logs
 
 # Make entrypoint script executable
-RUN chmod +x /var/www/html/railway-entrypoint.sh
+RUN chmod +x /var/www/html/start.sh
 
 # Expose port (Railway will set PORT env variable)
 EXPOSE 80
