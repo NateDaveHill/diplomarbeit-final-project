@@ -27,7 +27,7 @@ $orders = $stmt->fetchAll();
 <body>
 <header>
     <nav class="container">
-        <a href="index.php" class="logo">Webshop</a>
+        <a href="index.php" class="logo">Nate's Webshop</a>
         <ul class="nav-links">
             <li><a href="index.php">Produkte</a></li>
             <li><a href="cart.php">Warenkorb <?php if (getCartCount() > 0): ?><span class="cart-badge"><?= getCartCount() ?></span><?php endif; ?></a><hat/li>
