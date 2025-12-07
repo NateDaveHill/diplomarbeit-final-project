@@ -28,17 +28,24 @@ loadEnv($envPath);
 
 // Database configuration
 // Railway provides DATABASE_URL, parse it if available
-if (isset($_ENV['DATABASE_URL'])) {
-    $db = parse_url($_ENV['DATABASE_URL']);
-    define('DB_HOST', $db['host'] ?? 'localhost');
+$databaseUrl = $_ENV['DATABASE_URL'] ?? getenv('DATABASE_URL');
+
+if ($databaseUrl) {
+    $db = parse_url($databaseUrl);
+    $dbHost = $db['host'] ?? 'localhost';
+    // Add port if specified
+    if (isset($db['port'])) {
+        $dbHost .= ':' . $db['port'];
+    }
+    define('DB_HOST', $dbHost);
     define('DB_NAME', ltrim($db['path'] ?? '/webshop_edv', '/'));
     define('DB_USER', $db['user'] ?? 'root');
     define('DB_PASS', $db['pass'] ?? '');
 } else {
-    define('DB_HOST', $_ENV['DB_HOST'] ?? 'localhost');
-    define('DB_NAME', $_ENV['DB_NAME'] ?? 'webshop_edv');
-    define('DB_USER', $_ENV['DB_USER'] ?? 'root');
-    define('DB_PASS', $_ENV['DB_PASS'] ?? '');
+    define('DB_HOST', $_ENV['DB_HOST'] ?? getenv('DB_HOST') ?: 'localhost');
+    define('DB_NAME', $_ENV['DB_NAME'] ?? getenv('DB_NAME') ?: 'webshop_edv');
+    define('DB_USER', $_ENV['DB_USER'] ?? getenv('DB_USER') ?: 'root');
+    define('DB_PASS', $_ENV['DB_PASS'] ?? getenv('DB_PASS') ?: '');
 }
 
 
@@ -62,9 +69,16 @@ try{
 
 // Secure session configuration
 ini_set('session.cookie_httponly', 1);
-ini_set('session.cookie_secure', 1);
 ini_set('session.cookie_samesite', 'Strict');
-if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
+
+// Check if we're on HTTPS (works with Railway's proxy setup)
+$isHttps = (
+    (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ||
+    (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ||
+    (isset($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] === 'on')
+);
+
+if ($isHttps) {
     ini_set('session.cookie_secure', 1);
 }
 

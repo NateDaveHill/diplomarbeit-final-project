@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     zip \
     unzip \
+    default-mysql-client \
     && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
@@ -49,4 +50,4 @@ RUN chmod +x /var/www/html/start.sh
 EXPOSE 80
 
 # Use custom entrypoint that runs database setup
-CMD ["/var/www/html/railway-entrypoint.sh"]
+CMD ["/var/www/html/start.sh"]
