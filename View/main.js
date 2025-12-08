@@ -139,7 +139,6 @@ window.onclick = function(event) {
     document.getElementById('deleteForm').submit();
 }
 }
-
     function showOrderDetails(orderId) {
     const modal = document.getElementById('orderModal');
     modal.classList.add('active');

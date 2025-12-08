@@ -31,11 +31,14 @@ function loadEnv($path) {
 $envPath = dirname(__DIR__) . '/.env';
 loadEnv($envPath);
 
-// Check for Railway DATABASE_URL first, then fall back to .env
+// Check for Railway MYSQL_URL or DATABASE_URL first, then fall back to .env
 $databaseUrl = $_ENV['DATABASE_URL'] ?? getenv('DATABASE_URL');
+if (!$databaseUrl) {
+    $databaseUrl = $_ENV['MYSQL_URL'] ?? getenv('MYSQL_URL');
+}
 
 if ($databaseUrl) {
-    echo "Using DATABASE_URL from Railway...\n";
+    echo "Using database URL from Railway...\n";
     $db = parse_url($databaseUrl);
     $db_host = $db['host'] ?? 'localhost';
     // Add port if specified

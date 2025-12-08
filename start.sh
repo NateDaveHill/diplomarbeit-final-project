@@ -5,14 +5,23 @@ echo "======================================"
 echo "Starting deployment..."
 echo "======================================"
 
-# Parse DATABASE_URL if present (Railway)
+# Check for Railway database URL (MYSQL_URL or DATABASE_URL)
 if [ ! -z "$DATABASE_URL" ]; then
+    DB_URL="$DATABASE_URL"
     echo "✓ DATABASE_URL detected, parsing..."
+elif [ ! -z "$MYSQL_URL" ]; then
+    DB_URL="$MYSQL_URL"
+    echo "✓ MYSQL_URL detected, parsing..."
+else
+    DB_URL=""
+fi
 
-    # Parse the DATABASE_URL
+if [ ! -z "$DB_URL" ]; then
+
+    # Parse the database URL
     # Format: mysql://user:password@host:port/database
-    PROTOCOL=$(echo $DATABASE_URL | grep :// | sed -e's,^\(.*://\).*,\1,g')
-    URL_NO_PROTOCOL=$(echo ${DATABASE_URL/$PROTOCOL/})
+    PROTOCOL=$(echo $DB_URL | grep :// | sed -e's,^\(.*://\).*,\1,g')
+    URL_NO_PROTOCOL=$(echo ${DB_URL/$PROTOCOL/})
 
     # Extract user and password
     USERPASS=$(echo $URL_NO_PROTOCOL | grep @ | cut -d@ -f1)

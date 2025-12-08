@@ -27,8 +27,11 @@ $envPath = dirname(__DIR__) . '/.env';
 loadEnv($envPath);
 
 // Database configuration
-// Railway provides DATABASE_URL, parse it if available
+// Check for Railway MYSQL_URL/DATABASE_URL first
 $databaseUrl = $_ENV['DATABASE_URL'] ?? getenv('DATABASE_URL');
+if (!$databaseUrl) {
+    $databaseUrl = $_ENV['MYSQL_URL'] ?? getenv('MYSQL_URL');
+}
 
 if ($databaseUrl) {
     $db = parse_url($databaseUrl);
