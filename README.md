@@ -96,8 +96,6 @@ Bevor du startest, stelle sicher, dass folgende Software installiert ist:
 - Benutzername: `admin`
 - Passwort: `Pass1234word`
 
-⚠️ **WICHTIG:** Ändere nach dem ersten Login das Passwort über dein Profil!
-
 ## Entwicklungsserver stoppen
 
 Drücke `Ctrl + C` im Terminal, in dem `devenv up` läuft.
