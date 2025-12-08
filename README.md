@@ -1,6 +1,6 @@
 # Diplomarbeit Applikationsentwicklung - Nathan Hill
 
-Mein Online Store wird auch auf Railway mit einer CI/CD Deployment Pipeline für testing zwecken LIVE gehosted um direkt den Webshop auch anzusehen und zu testen.
+Mein Online Store wird auch auf Railway mit einer CI/CD Deployment Pipeline für Testing zwecken LIVE gehosted.
 
 **Live Demo:** [Webshop auf Railway ansehen](https://diplomarbeit-final-project-production.up.railway.app/)
 
