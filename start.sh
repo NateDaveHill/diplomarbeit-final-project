@@ -73,7 +73,14 @@ RETRY_COUNT=0
 DB_READY=false
 
 while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
-    if mysql -h"$DB_HOST" -P"$DB_PORT" -u"$DB_USER" -p"$DB_PASS" -e "SELECT 1" > /dev/null 2>&1; then
+    if php -r "
+        try {
+            \$pdo = new PDO('mysql:host=$DB_HOST;port=$DB_PORT;charset=utf8mb4', '$DB_USER', '$DB_PASS', [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+            exit(0);
+        } catch (PDOException \$e) {
+            exit(1);
+        }
+    " 2>/dev/null; then
         DB_READY=true
         break
     fi
