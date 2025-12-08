@@ -27,16 +27,31 @@ function loadEnv($path) {
     return true;
 }
 
-// Load .env file from project root
+// Load .env file from project root (for local development)
 $envPath = dirname(__DIR__) . '/.env';
-if (!loadEnv($envPath)) {
-    die("Error: .env file not found at $envPath. Please copy .env.example to .env and configure it.\n");
-}
+loadEnv($envPath);
 
-$db_host = $_ENV['DB_HOST'] ?? 'localhost';
-$db_name = $_ENV['DB_NAME'] ?? 'webshop_edv';
-$db_user = $_ENV['DB_USER'] ?? 'root';
-$db_pass = $_ENV['DB_PASS'] ?? '';
+// Check for Railway DATABASE_URL first, then fall back to .env
+$databaseUrl = $_ENV['DATABASE_URL'] ?? getenv('DATABASE_URL');
+
+if ($databaseUrl) {
+    echo "Using DATABASE_URL from Railway...\n";
+    $db = parse_url($databaseUrl);
+    $db_host = $db['host'] ?? 'localhost';
+    // Add port if specified
+    if (isset($db['port'])) {
+        $db_host .= ':' . $db['port'];
+    }
+    $db_name = ltrim($db['path'] ?? '/railway', '/');
+    $db_user = $db['user'] ?? 'root';
+    $db_pass = $db['pass'] ?? '';
+} else {
+    echo "Using local .env configuration...\n";
+    $db_host = $_ENV['DB_HOST'] ?? 'localhost';
+    $db_name = $_ENV['DB_NAME'] ?? 'webshop_edv';
+    $db_user = $_ENV['DB_USER'] ?? 'root';
+    $db_pass = $_ENV['DB_PASS'] ?? '';
+}
 
 echo "Database Setup Configuration:\n";
 echo "  Host: $db_host\n";
