@@ -17,8 +17,7 @@ $final_total = $cart_total - $discount;
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Warenkorb - Webshop</title>
     <link rel="stylesheet" href="style.css">
@@ -80,7 +79,7 @@ $final_total = $cart_total - $discount;
                     <a href="index.php" class="btn btn-primary mt-3">Produkte ansehen</a>
                 </div>
             <?php else: ?>
-                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
+                <div class="cart-layout">
                     <div>
                         <form method="POST" action="cart.php">
                             <?php foreach ($_SESSION['cart'] as $item): ?>

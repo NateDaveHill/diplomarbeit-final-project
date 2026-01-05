@@ -70,7 +70,7 @@ $orders = $stmt->fetchAll();
 
         <div class="profile-section">
             <h2>Benutzerdaten</h2>
-            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+            <div class="profile-grid">
                 <div>
                     <strong>Benutzername:</strong>
                     <p><?= htmlspecialchars($user['username']) ?></p>
@@ -130,43 +130,45 @@ $orders = $stmt->fetchAll();
                 <p class="text-muted">Sie haben noch keine Bestellungen aufgegeben.</p>
                 <a href="index.php" class="btn btn-primary mt-2">Jetzt einkaufen</a>
             <?php else: ?>
-                <div class="table">
-                    <table style="width: 100%;">
-                        <thead>
-                        <tr>
-                            <th>Bestellung #</th>
-                            <th>Datum</th>
-                            <th>Betrag</th>
-                            <th>Status</th>
-                            <th>Details</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <?php foreach ($orders as $order): ?>
+                <div class="table-container">
+                    <div class="table">
+                        <table style="width: 100%;">
+                            <thead>
                             <tr>
-                                <td>#<?= $order['id'] ?></td>
-                                <td><?= date('d.m.Y H:i', strtotime($order['created_at'])) ?></td>
-                                <td>€<?= number_format($order['final_amount'], 2, ',', '.') ?></td>
-                                <td>
-                                    <?php
-                                    $status_labels = [
-                                        'pending' => ['Ausstehend', 'status-pending'],
-                                        'paid' => ['Bezahlt', 'status-paid'],
-                                        'shipped' => ['Versandt', 'status-shipped'],
-                                        'delivered' => ['Zugestellt', 'status-delivered'],
-                                        'cancelled' => ['Storniert', 'status-cancelled']
-                                    ];
-                                    $status_info = $status_labels[$order['status']] ?? ['Unbekannt', 'status-pending'];
-                                    ?>
-                                    <span class="status-badge <?= $status_info[1] ?>"><?= $status_info[0] ?></span>
-                                </td>
-                                <td>
-                                    <button onclick="showOrderDetails(<?= $order['id'] ?>)" class="btn btn-secondary btn-small">Details</button>
-                                </td>
+                                <th>Bestellung #</th>
+                                <th>Datum</th>
+                                <th>Betrag</th>
+                                <th>Status</th>
+                                <th>Details</th>
                             </tr>
-                        <?php endforeach; ?>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                            <?php foreach ($orders as $order): ?>
+                                <tr>
+                                    <td>#<?= $order['id'] ?></td>
+                                    <td><?= date('d.m.Y H:i', strtotime($order['created_at'])) ?></td>
+                                    <td>€<?= number_format($order['final_amount'], 2, ',', '.') ?></td>
+                                    <td>
+                                        <?php
+                                        $status_labels = [
+                                            'pending' => ['Ausstehend', 'status-pending'],
+                                            'paid' => ['Bezahlt', 'status-paid'],
+                                            'shipped' => ['Versandt', 'status-shipped'],
+                                            'delivered' => ['Zugestellt', 'status-delivered'],
+                                            'cancelled' => ['Storniert', 'status-cancelled']
+                                        ];
+                                        $status_info = $status_labels[$order['status']] ?? ['Unbekannt', 'status-pending'];
+                                        ?>
+                                        <span class="status-badge <?= $status_info[1] ?>"><?= $status_info[0] ?></span>
+                                    </td>
+                                    <td>
+                                        <button onclick="showOrderDetails(<?= $order['id'] ?>)" class="btn btn-secondary btn-small">Details</button>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             <?php endif; ?>
         </div>

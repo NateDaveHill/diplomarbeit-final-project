@@ -533,6 +533,74 @@ footer {
     text-align: center;
 }
 
+/* Responsive Grid Layouts */
+.cart-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+}
+
+.product-detail-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    background: white;
+    padding: 3rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px var(--shadow);
+}
+
+.product-detail-image {
+    height: 400px;
+    font-size: 8rem;
+}
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.search-form {
+    display: flex;
+    gap: 0.5rem;
+    max-width: 500px;
+}
+
+.admin-header-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.admin-header-controls h2 {
+    margin-bottom: 0;
+}
+
+/* Table Container for Mobile Scrolling */
+.table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 -1rem;
+    padding: 0 1rem;
+}
+
+/* Mobile Navigation Toggle */
+.nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--primary);
+    padding: 0.5rem;
+}
+
+.nav-toggle:hover {
+    color: var(--secondary);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     nav {
@@ -571,11 +639,102 @@ footer {
 
     .table {
         font-size: 0.85rem;
+        min-width: 600px;
     }
 
     .table th,
     .table td {
         padding: 0.75rem 0.5rem;
+        white-space: nowrap;
+    }
+
+    /* New responsive grid classes */
+    .cart-layout {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .product-detail-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 2rem;
+    }
+
+    .product-detail-image {
+        height: 300px;
+        font-size: 6rem;
+    }
+
+    .profile-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .search-form {
+        max-width: 100%;
+        flex-direction: column;
+    }
+
+    .search-form .form-control {
+        width: 100%;
+    }
+
+    .search-form .btn {
+        width: 100%;
+    }
+
+    .admin-header-controls {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .admin-header-controls .btn {
+        width: 100%;
+    }
+
+    /* Tables - enable horizontal scroll */
+    .table-container {
+        margin: 0 -15px;
+        padding: 0 15px;
+    }
+
+    /* Make action buttons stack vertically in tables */
+    .table td .btn {
+        display: block;
+        margin-bottom: 0.25rem;
+        width: 100%;
+        font-size: 0.8rem;
+        padding: 0.4rem 0.6rem;
+    }
+
+    .table td .btn:last-child {
+        margin-bottom: 0;
+    }
+
+    /* Improve form groups on mobile */
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .profile-section {
+        padding: 1.5rem;
+    }
+
+    /* Touch-friendly button sizing */
+    .btn,
+    .nav-links a,
+    .form-control,
+    input[type="number"],
+    select {
+        min-height: 44px;
+    }
+
+    .btn-small {
+        min-height: 38px;
+    }
+
+    .container {
+        padding: 0 15px;
     }
 }
 
@@ -606,13 +765,91 @@ footer {
     }
 
     .btn {
-        padding: 0.6rem 1.2rem;
+        padding: 0.6rem 1rem;
         font-size: 0.9rem;
     }
 
     .modal-content {
         width: 95%;
         padding: 1.5rem;
+    }
+
+    .product-detail-layout {
+        padding: 1.5rem;
+        gap: 1.5rem;
+    }
+
+    .product-detail-image {
+        height: 250px;
+        font-size: 4rem;
+    }
+
+    .cart-summary {
+        padding: 1.5rem;
+    }
+
+    .summary-row {
+        font-size: 0.9rem;
+    }
+
+    .admin-card {
+        padding: 1.5rem;
+    }
+
+    .table {
+        font-size: 0.75rem;
+        min-width: 500px;
+    }
+
+    .table th,
+    .table td {
+        padding: 0.5rem 0.25rem;
+    }
+
+    .profile-section {
+        padding: 1rem;
+    }
+
+    .alert {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+    }
+
+    .container {
+        padding: 0 10px;
+    }
+}
+
+@media (max-width: 360px) {
+    .logo {
+        font-size: 1.1rem;
+    }
+
+    .nav-links {
+        font-size: 0.8rem;
+        gap: 0.3rem;
+    }
+
+    .page-header h1 {
+        font-size: 1.3rem;
+    }
+
+    .product-price {
+        font-size: 1.3rem;
+    }
+
+    .btn {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.85rem;
+    }
+
+    .cart-summary {
+        padding: 1rem;
+    }
+
+    .form-control {
+        padding: 0.6rem;
+        font-size: 0.9rem;
     }
 }
 

@@ -11,8 +11,7 @@ $users = $pdo->query("SELECT * FROM users ORDER BY created_at DESC")->fetchAll()
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Admin Dashboard - Webshop</title>
     <link rel="stylesheet" href="style.css">
@@ -81,128 +80,134 @@ $users = $pdo->query("SELECT * FROM users ORDER BY created_at DESC")->fetchAll()
         </div>
 
         <div class="profile-section">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                <h2 style="margin-bottom: 0;">Produktverwaltung</h2>
+            <div class="admin-header-controls">
+                <h2>Produktverwaltung</h2>
                 <button onclick="showAddProductModal()" class="btn btn-primary">Produkt hinzufügen</button>
             </div>
 
-            <div class="table">
-                <table style="width: 100%;">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Preis</th>
-                        <th>Lagerbestand</th>
-                        <th>Aktionen</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php foreach ($products as $product): ?>
+            <div class="table-container">
+                <div class="table">
+                    <table style="width: 100%;">
+                        <thead>
                         <tr>
-                            <td>#<?= $product['id'] ?></td>
-                            <td><?= htmlspecialchars($product['name']) ?></td>
-                            <td>€<?= number_format($product['price'], 2, ',', '.') ?></td>
-                            <td><?= $product['stock'] ?></td>
-                            <td>
-                                <button onclick='editProduct(<?= json_encode($product) ?>)' class="btn btn-secondary btn-small">Bearbeiten</button>
-                                <button onclick="deleteProduct(<?= $product['id'] ?>)" class="btn btn-danger btn-small">Löschen</button>
-                            </td>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Preis</th>
+                            <th>Lagerbestand</th>
+                            <th>Aktionen</th>
                         </tr>
-                    <?php endforeach; ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($products as $product): ?>
+                            <tr>
+                                <td>#<?= $product['id'] ?></td>
+                                <td><?= htmlspecialchars($product['name']) ?></td>
+                                <td>€<?= number_format($product['price'], 2, ',', '.') ?></td>
+                                <td><?= $product['stock'] ?></td>
+                                <td>
+                                    <button onclick='editProduct(<?= json_encode($product) ?>)' class="btn btn-secondary btn-small">Bearbeiten</button>
+                                    <button onclick="deleteProduct(<?= $product['id'] ?>)" class="btn btn-danger btn-small">Löschen</button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
         <div class="profile-section">
             <h2>Bestellverwaltung</h2>
 
-            <div class="table">
-                <table style="width: 100%;">
-                    <thead>
-                    <tr>
-                        <th>Bestellung #</th>
-                        <th>Kunde</th>
-                        <th>Datum</th>
-                        <th>Betrag</th>
-                        <th>Status</th>
-                        <th>Aktionen</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php foreach ($orders as $order): ?>
+            <div class="table-container">
+                <div class="table">
+                    <table style="width: 100%;">
+                        <thead>
                         <tr>
-                            <td>#<?= $order['id'] ?></td>
-                            <td><?= htmlspecialchars($order['username']) ?></td>
-                            <td><?= date('d.m.Y H:i', strtotime($order['created_at'])) ?></td>
-                            <td>€<?= number_format($order['final_amount'], 2, ',', '.') ?></td>
-                            <td>
-                                <?php
-                                $status_labels = [
-                                    'pending' => ['Ausstehend', 'status-pending'],
-                                    'paid' => ['Bezahlt', 'status-paid'],
-                                    'shipped' => ['Versandt', 'status-shipped'],
-                                    'delivered' => ['Zugestellt', 'status-delivered'],
-                                    'cancelled' => ['Storniert', 'status-cancelled']
-                                ];
-                                $status_info = $status_labels[$order['status']] ?? ['Unbekannt', 'status-pending'];
-                                ?>
-                                <span class="status-badge <?= $status_info[1] ?>"><?= $status_info[0] ?></span>
-                            </td>
-                            <td>
-                                <button onclick='updateOrderStatus(<?= $order['id'] ?>, "<?= $order['status'] ?>")' class="btn btn-secondary btn-small">Status ändern</button>
-                                <button onclick="showOrderDetails(<?= $order['id'] ?>)" class="btn btn-primary btn-small">Details</button>
-                            </td>
+                            <th>Bestellung #</th>
+                            <th>Kunde</th>
+                            <th>Datum</th>
+                            <th>Betrag</th>
+                            <th>Status</th>
+                            <th>Aktionen</th>
                         </tr>
-                    <?php endforeach; ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($orders as $order): ?>
+                            <tr>
+                                <td>#<?= $order['id'] ?></td>
+                                <td><?= htmlspecialchars($order['username']) ?></td>
+                                <td><?= date('d.m.Y H:i', strtotime($order['created_at'])) ?></td>
+                                <td>€<?= number_format($order['final_amount'], 2, ',', '.') ?></td>
+                                <td>
+                                    <?php
+                                    $status_labels = [
+                                        'pending' => ['Ausstehend', 'status-pending'],
+                                        'paid' => ['Bezahlt', 'status-paid'],
+                                        'shipped' => ['Versandt', 'status-shipped'],
+                                        'delivered' => ['Zugestellt', 'status-delivered'],
+                                        'cancelled' => ['Storniert', 'status-cancelled']
+                                    ];
+                                    $status_info = $status_labels[$order['status']] ?? ['Unbekannt', 'status-pending'];
+                                    ?>
+                                    <span class="status-badge <?= $status_info[1] ?>"><?= $status_info[0] ?></span>
+                                </td>
+                                <td>
+                                    <button onclick='updateOrderStatus(<?= $order['id'] ?>, "<?= $order['status'] ?>")' class="btn btn-secondary btn-small">Status ändern</button>
+                                    <button onclick="showOrderDetails(<?= $order['id'] ?>)" class="btn btn-primary btn-small">Details</button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
         <div class="profile-section">
             <h2>Benutzerverwaltung</h2>
 
-            <div class="table">
-                <table style="width: 100%;">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Benutzername</th>
-                        <th>E-Mail</th>
-                        <th>Rolle</th>
-                        <th>Bonuspunkte</th>
-                        <th>Aktionen</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php foreach ($users as $user): ?>
+            <div class="table-container">
+                <div class="table">
+                    <table style="width: 100%;">
+                        <thead>
                         <tr>
-                            <td>#<?= $user['id'] ?></td>
-                            <td><?= htmlspecialchars($user['username']) ?></td>
-                            <td><?= htmlspecialchars($user['email']) ?></td>
-                            <td>
-                                <?php
-                                $role_badges = [
-                                    'customer' => ['Kunde', 'badge-customer'],
-                                    'premium' => ['Premium', 'badge-premium'],
-                                    'admin' => ['Admin', 'badge-admin']
-                                ];
-                                $role_info = $role_badges[$user['role']] ?? ['Gast', 'badge-customer'];
-                                ?>
-                                <span class="user-badge <?= $role_info[1] ?>"><?= $role_info[0] ?></span>
-                            </td>
-                            <td><?= $user['bonus_points'] ?></td>
-                            <td>
-                                <?php if ($user['id'] !== $_SESSION['user_id']): ?>
-                                    <button onclick='updateUserRole(<?= $user['id'] ?>, "<?= $user['role'] ?>", "<?= htmlspecialchars($user['username']) ?>")' class="btn btn-secondary btn-small">Rolle ändern</button>
-                                <?php endif; ?>
-                            </td>
+                            <th>ID</th>
+                            <th>Benutzername</th>
+                            <th>E-Mail</th>
+                            <th>Rolle</th>
+                            <th>Bonuspunkte</th>
+                            <th>Aktionen</th>
                         </tr>
-                    <?php endforeach; ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($users as $user): ?>
+                            <tr>
+                                <td>#<?= $user['id'] ?></td>
+                                <td><?= htmlspecialchars($user['username']) ?></td>
+                                <td><?= htmlspecialchars($user['email']) ?></td>
+                                <td>
+                                    <?php
+                                    $role_badges = [
+                                        'customer' => ['Kunde', 'badge-customer'],
+                                        'premium' => ['Premium', 'badge-premium'],
+                                        'admin' => ['Admin', 'badge-admin']
+                                    ];
+                                    $role_info = $role_badges[$user['role']] ?? ['Gast', 'badge-customer'];
+                                    ?>
+                                    <span class="user-badge <?= $role_info[1] ?>"><?= $role_info[0] ?></span>
+                                </td>
+                                <td><?= $user['bonus_points'] ?></td>
+                                <td>
+                                    <?php if ($user['id'] !== $_SESSION['user_id']): ?>
+                                        <button onclick='updateUserRole(<?= $user['id'] ?>, "<?= $user['role'] ?>", "<?= htmlspecialchars($user['username']) ?>")' class="btn btn-secondary btn-small">Rolle ändern</button>
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

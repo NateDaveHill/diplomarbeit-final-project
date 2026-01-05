@@ -67,9 +67,9 @@ if (!$product) {
 
         <a href="index.php" style="display: inline-block; margin-bottom: 1rem; color: var(--secondary); text-decoration: none;">← Zurück</a>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; background: white; padding: 3rem; border-radius: 12px; box-shadow: 0 4px 15px var(--shadow);">
+        <div class="product-detail-layout">
             <div>
-                <div class="product-image" style="height: 400px; font-size: 8rem;">📦</div>
+                <div class="product-image product-detail-image">📦</div>
             </div>
 
             <div>

@@ -21,8 +21,7 @@ $products = $stmt->fetchAll();
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Webshop - Home</title>
     <link rel="stylesheet" href="style.css">
@@ -60,7 +59,7 @@ $products = $stmt->fetchAll();
         <div class="container">
             <h1>Unsere Produkte</h1>
             <form method="GET" style="margin-top: 1rem;">
-                <div style="display: flex; gap: 0.5rem; max-width: 500px;">
+                <div class="search-form">
                     <input type="text" name="search" class="form-control" placeholder="Produkte suchen..." value="<?= htmlspecialchars($search) ?>">
                    <button type="submit" class="btn btn-primary">Suchen</button>
                 </div>
