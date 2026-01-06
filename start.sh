@@ -113,6 +113,25 @@ php Model/setup.php || echo "⚠️  Setup already completed or failed (this is 
 
 echo ""
 echo "======================================"
+echo "Configuring Apache MPM modules..."
+echo "======================================"
+
+# Fix MPM conflicts at runtime (Railway infrastructure issue)
+# Disable conflicting MPMs
+a2dismod mpm_event mpm_worker 2>/dev/null || true
+
+# Remove leftover symlinks that may persist
+rm -f /etc/apache2/mods-enabled/mpm_event.* /etc/apache2/mods-enabled/mpm_worker.* 2>/dev/null || true
+
+# Enable mpm_prefork (required for mod_php)
+a2enmod mpm_prefork
+
+# Test Apache configuration
+echo "Testing Apache configuration..."
+apache2ctl -t
+
+echo ""
+echo "======================================"
 echo "Starting Apache web server..."
 echo "======================================"
 exec apache2-foreground
