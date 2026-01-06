@@ -28,9 +28,14 @@ $orders = $stmt->fetchAll();
 <header>
     <nav class="container">
         <a href="index.php" class="logo">Nate's Webshop</a>
+        <button class="nav-toggle" aria-label="Toggle navigation" onclick="toggleMobileMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
         <ul class="nav-links">
             <li><a href="index.php">Produkte</a></li>
-            <li><a href="cart.php">Warenkorb <?php if (getCartCount() > 0): ?><span class="cart-badge"><?= getCartCount() ?></span><?php endif; ?></a><hat/li>
+            <li><a href="cart.php">Warenkorb <?php if (getCartCount() > 0): ?><span class="cart-badge"><?= getCartCount() ?></span><?php endif; ?></a></li>
             <li><a href="profile.php">Profil</a></li>
             <?php if (isAdmin()): ?>
                 <li><a href="admin.php">Admin</a></li>

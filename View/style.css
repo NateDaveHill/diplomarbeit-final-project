@@ -591,21 +591,42 @@ footer {
     display: none;
     background: none;
     border: none;
-    font-size: 1.5rem;
     cursor: pointer;
-    color: var(--primary);
     padding: 0.5rem;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 2rem;
+    height: 2rem;
 }
 
-.nav-toggle:hover {
-    color: var(--secondary);
+.nav-toggle span {
+    width: 100%;
+    height: 3px;
+    background-color: var(--primary);
+    transition: all 0.3s;
+    border-radius: 2px;
+}
+
+.nav-toggle:hover span {
+    background-color: var(--secondary);
+}
+
+.nav-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.nav-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.nav-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
     nav {
-        flex-direction: column;
-        gap: 1rem;
+        flex-wrap: wrap;
         padding: 1rem 0;
     }
 
@@ -613,10 +634,37 @@ footer {
         font-size: 1.5rem;
     }
 
+    .nav-toggle {
+        display: flex;
+        order: 1;
+    }
+
     .nav-links {
-        gap: 0.75rem;
-        flex-wrap: wrap;
-        justify-content: center;
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        gap: 0;
+        padding: 1rem 0;
+        order: 2;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links li {
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .nav-links li:last-child {
+        border-bottom: none;
+    }
+
+    .nav-links a {
+        display: block;
+        padding: 0.75rem 1rem;
         font-size: 0.9rem;
     }
 
@@ -627,6 +675,30 @@ footer {
 
     .cart-item {
         grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .cart-item-image {
+        width: 100%;
+        height: 150px;
+        font-size: 3rem;
+    }
+
+    .quantity-control {
+        justify-content: center;
+        gap: 1.5rem;
+    }
+
+    .quantity-control input {
+        width: 80px;
+        text-align: center;
+        font-size: 1.1rem;
+    }
+
+    .quantity-control .btn {
+        min-width: 50px;
+        min-height: 50px;
+        font-size: 1.2rem;
     }
 
     .page-header h1 {
@@ -639,12 +711,19 @@ footer {
 
     .table {
         font-size: 0.85rem;
-        min-width: 600px;
     }
 
     .table th,
     .table td {
         padding: 0.75rem 0.5rem;
+    }
+
+    .table td {
+        white-space: normal;
+        word-wrap: break-word;
+    }
+
+    .table th {
         white-space: nowrap;
     }
 
@@ -743,15 +822,6 @@ footer {
         font-size: 1.3rem;
     }
 
-    .nav-links {
-        gap: 0.5rem;
-        font-size: 0.85rem;
-    }
-
-    .nav-links a {
-        padding: 0.25rem 0.5rem;
-    }
-
     .page-header {
         padding: 2rem 0;
     }
@@ -798,7 +868,6 @@ footer {
 
     .table {
         font-size: 0.75rem;
-        min-width: 500px;
     }
 
     .table th,

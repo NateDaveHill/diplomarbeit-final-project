@@ -21,6 +21,11 @@ $users = $pdo->query("SELECT * FROM users ORDER BY created_at DESC")->fetchAll()
 <header>
     <nav class="container">
         <a href="index.php" class="logo">Nate's Online Shop</a>
+        <button class="nav-toggle" aria-label="Toggle navigation" onclick="toggleMobileMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
         <ul class="nav-links">
             <li><a href="index.php">Produkte</a></li>
             <li><a href="cart.php">Warenkorb <?php if (getCartCount() > 0): ?><span class="cart-badge"><?= getCartCount() ?></span><?php endif; ?></a></li>
